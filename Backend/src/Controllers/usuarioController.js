@@ -1,5 +1,4 @@
 import usuario from "../Models/usuarioModel.js";
-import User from "../Models/usuarioModel.js";
 import bcrypt from 'bcrypt';
 
 export default class UserController {
