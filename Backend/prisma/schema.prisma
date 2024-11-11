@@ -11,7 +11,7 @@ model album {
   id           Int       @id @default(autoincrement())
   title        String    @db.VarChar(100)
   portada_url  String?   @db.VarChar(255)
-  release_date DateTime? @db.Date
+  release_date DateTime? @default(now()) @db.Timestamp(6)
   artist_id    Int?
   usuario      usuario?  @relation(fields: [artist_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   cancion      cancion[]
@@ -37,7 +37,7 @@ model cancion {
   artist_id       Int?
   file_url        String            @db.VarChar(255)
   portada_url     String?           @db.VarChar(255)
-  release_date    DateTime?         @db.Date
+  release_date    DateTime?         @default(now()) @db.Timestamp(6)
   reproducciones  Int?              @default(0)
   album           album?            @relation(fields: [album_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usuario         usuario?          @relation(fields: [artist_id], references: [id], onDelete: NoAction, onUpdate: NoAction)

@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "album" ALTER COLUMN "release_date" SET DEFAULT CURRENT_TIMESTAMP,
+ALTER COLUMN "release_date" SET DATA TYPE TIMESTAMP(6);
+
+-- AlterTable
+ALTER TABLE "cancion" ALTER COLUMN "release_date" SET DATA TYPE TIMESTAMP(6);
