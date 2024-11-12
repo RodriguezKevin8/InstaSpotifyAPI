@@ -4,8 +4,12 @@ import upload from "../config/multer.js";
 
 const router = express.Router();
 
-router.post("/create",upload.single("avatar"), perfilController.createPerfil);
-router.patch("/update/:id", upload.single("avatar"), perfilController.updatePerfil);
-router.get("/edit/:id", perfilController.getPerfil);
+router.post("/create", upload.single("avatar"), perfilController.createPerfil);
+router.patch(
+  "/update/:id",
+  upload.single("avatar"),
+  perfilController.updatePerfil
+);
+router.get("/:id", perfilController.getPerfil);
 
 export default router;
