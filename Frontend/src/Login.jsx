@@ -1,16 +1,36 @@
 // src/Login.jsx
-import { useState } from 'react';
-import './Login.css';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleChange = (e) => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar los datos a tu backend
-    console.log('Iniciando sesión con:', { username, password });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/usuario/login",
+        credentials
+      );
+      const userData = response.data;
+
+      localStorage.setItem("user", JSON.stringify(userData));
+      navigate("/");
+    } catch (err) {
+      setError("Error al iniciar sesión. Verifica tus credenciales.");
+      console.error("Error al iniciar sesión:", err);
+    }
   };
 
   return (
@@ -18,21 +38,24 @@ const Login = () => {
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleLogin}>
         <input
-          type="text"
-          placeholder="Nombre de usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          name="email"
+          placeholder="Correo electrónico"
+          value={credentials.email}
+          onChange={handleChange}
           required
         />
         <input
           type="password"
+          name="password"
           placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={credentials.password}
+          onChange={handleChange}
           required
         />
         <button type="submit">Iniciar Sesión</button>
       </form>
+      {error && <p className="error">{error}</p>}
       <p>
         ¿No tienes una cuenta? <Link to="/register">Crear cuenta</Link>
       </p>
