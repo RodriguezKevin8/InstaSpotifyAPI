@@ -1,0 +1,91 @@
+/* src/Profile.css */
+
+.home-feed {
+    display: flex;
+    height: 100vh;
+  }
+  .logo {
+    font-size: 35px;
+    font-weight: bold;
+    color: #1db954; 
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: -20px;
+    padding-bottom: 10px;
+  }
+  
+  .logo:hover, .logo:focus, .logo:visited {
+    color: #1db954; /* Mantiene el color original en todos los estados */
+  }
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+  }
+  
+  .profile-image {
+  height: 100PX;
+  width: 100px;
+  border-radius: 100px;  
+  margin-left: -700px;
+  margin-top: 20px;
+  }
+  
+  .profile-info {
+    color: #fff;
+    margin-top: -100px;
+  }
+  
+  .edit-button,
+  .earnings-button {
+    background-color: #1db954;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .profile-tabs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .tab-button {
+    background: none;
+    border: none;
+    color: #1db954;
+    font-size: 18px;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .tab-button.active {
+    border-bottom: 2px solid #1db954;
+  }
+  
+  .profile-posts {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .post-thumbnail {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  

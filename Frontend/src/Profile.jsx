@@ -1,23 +1,10 @@
-// src/HomeFeed.jsx
+// src/Profile.jsx
 import './HomeFeed.css';
-import { Link } from 'react-router-dom'; // Importa Link de react-router-dom
-import Stories from './stories';
-import Post from './post';
+import './Profile.css';
+import { Link } from 'react-router-dom';
 
-const HomeFeed = () => {
-  // Arreglo de datos de publicaciones
-  const postsData = [
-    { id: 1, avatar: "/img/drake.png", name: "DRAKE RAPPER", time: "1 hour ago", contentImage: "/img/drake.png" },
-    { id: 2, avatar: "/img/pesopluma.png", name: "Peso Pluma", time: "2 hours ago", contentImage: "/img/pesopluma.png" },
-    { id: 3, avatar: "/img/duki.png", name: "Duki", time: "3 hours ago", contentImage: "/img/duki.png" },
-    { id: 4, avatar: "/img/eladio.png", name: "Eladio", time: "4 hours ago", contentImage: "/img/eladio.png" },
-    { id: 5, avatar: "/img/BadBunny.jpg", name: "Bad Bunny", time: "5 hours ago", contentImage: "/img/BadBunny.jpg" },
-    { id: 6, avatar: "/img/drake.png", name: "Drake", time: "6 hours ago", contentImage: "/img/drake.png" },
-    { id: 7, avatar: "/img/pesopluma.png", name: "Peso Pluma", time: "7 hours ago", contentImage: "/img/pesopluma.png" }
-  ];
-
+const Profile = () => {
   return (
-    
     <div className="home-feed">
       {/* Sidebar */}
       <div className="sidebar">
@@ -50,21 +37,32 @@ const HomeFeed = () => {
 
       {/* Main Content */}
       <div className="main-content">
-        {/* Componente de Historias */}
-        <Stories />
+        {/* Profile Header */}
+        <div>
+          <img src="/img/romeo.jpeg" alt="Profile" className="profile-image" />
+          <div className="profile-info">
+            <h2>R.SANTOS</h2>
+            <button className="edit-button">Editar Perfil</button>
+            <button className="earnings-button">Ver Ganancias</button>
+            <p>3 Publicaciones</p>
+            <p>23 M Seguidores</p>
+            <p>30 Seguidos</p>
+            <h4>Romeo Santos</h4>
+            <p className="bio">El chico de las poesías</p>
+          </div>
+        </div>
 
-        {/* Renderizar múltiples posts */}
-        <div className="posts-grid">
-          {postsData.map((post) => (
-            <div key={post.id} className="post-container">
-              <Post
-                avatar={post.avatar}
-                name={post.name}
-                time={post.time}
-                contentImage={post.contentImage}
-              />
-            </div>
-          ))}
+        {/* Tabs */}
+        <div className="profile-tabs">
+          <button className="tab-button active">Publicaciones</button>
+          <button className="tab-button">Guardados</button>
+        </div>
+
+        {/* Posts Section */}
+        <div className="profile-posts">
+          <img src="/img/post1.jpg" alt="Post 1" className="post-thumbnail" />
+          <img src="/img/post2.jpg" alt="Post 2" className="post-thumbnail" />
+          <img src="/img/post3.jpg" alt="Post 3" className="post-thumbnail" />
         </div>
 
         {/* Music Player */}
@@ -84,4 +82,4 @@ const HomeFeed = () => {
   );
 };
 
-export default HomeFeed;
+export default Profile;
