@@ -7,6 +7,7 @@ import {
   createNewCancion,
   updateExistingCancion,
   deleteExistingCancion,
+  incrementarReproduccion,
 } from "../Controllers/cancionController.js";
 
 const router = express.Router();
@@ -34,5 +35,6 @@ router.put(
 ); // Actualizar una canción por ID
 
 router.delete("/:id", deleteExistingCancion); // Eliminar una canción por ID
+router.post("/:cancionId/reproduccion", incrementarReproduccion);
 
 export default router;
