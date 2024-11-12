@@ -27,19 +27,19 @@ export default class UserController {
       // Crear el usuario
       const user = await usuario.createUsuario(req.body);
 
-      // Crear automáticamente una entrada en la tabla de ganancias para el usuario recién creado
-      await prisma.ganancias.create({
-        data: {
-          usuario_id: user.id,
-          total_ganancias: 0.0,
-          ganancias_por_cancion: 0.0,
-          ganancias_por_anuncio: 0.0,
-          total_reproducciones: 0,
-          monto_por_reproduccion: 0.01, // Valor inicial por reproducción, ajustable según tus necesidades
-          fecha_actualizacion: new Date(), // Fecha de creación o última actualización
-        },
-      });
-
+      if (user.role === "Artista") {
+        await prisma.ganancias.create({
+          data: {
+            usuario_id: user.id,
+            total_ganancias: 0.0,
+            ganancias_por_cancion: 0.0,
+            ganancias_por_anuncio: 0.0,
+            total_reproducciones: 0,
+            monto_por_reproduccion: 0.01, // Valor inicial por reproducción, ajustable según tus necesidades
+            fecha_actualizacion: new Date(), // Fecha de creación o última actualización
+          },
+        });
+      }
       // Configurar el objeto de respuesta y enviarlo
       obj.value = user;
       obj.msg = "User created successfully with initial ganancias";

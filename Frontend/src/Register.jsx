@@ -1,19 +1,47 @@
 // src/Register.jsx
-import  { useState } from 'react';
-import './Register.css';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import "./Register.css";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [userType, setUserType] = useState('usuario');
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    nombre: "",
+    role: "Usuario",
+  });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleRegister = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar los datos a tu backend
-    console.log('Registrando usuario con:', { username, email, password, name, userType });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/usuario/register",
+        {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+          nombre: formData.nombre,
+        }
+      );
+
+      console.log("Registro exitoso:", response.data);
+      navigate("/login");
+    } catch (err) {
+      setError("Error al crear la cuenta. Inténtalo nuevamente.");
+      console.error("Error al registrar usuario:", err);
+    }
   };
 
   return (
@@ -22,42 +50,48 @@ const Register = () => {
       <form onSubmit={handleRegister}>
         <input
           type="text"
+          name="username"
           placeholder="Nombre de usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={formData.username}
+          onChange={handleChange}
           required
         />
         <input
           type="email"
+          name="email"
           placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
           required
         />
         <input
           type="password"
+          name="password"
           placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           required
         />
         <input
           type="text"
+          name="nombre"
           placeholder="Nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={formData.nombre}
+          onChange={handleChange}
           required
         />
         <select
-          value={userType}
-          onChange={(e) => setUserType(e.target.value)}
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
           required
         >
-          <option value="usuario">Usuario Normal</option>
-          <option value="artista">Artista</option>
+          <option value="Usuario">Usuario</option>
+          <option value="Artista">Artista</option>
         </select>
         <button type="submit">Crear Cuenta</button>
       </form>
+      {error && <p className="error">{error}</p>}
       <p>
         ¿Ya tienes una cuenta? <Link to="/login">Iniciar sesión</Link>
       </p>
