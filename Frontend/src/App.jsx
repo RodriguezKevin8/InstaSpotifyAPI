@@ -10,6 +10,8 @@ import Login from "./Login";
 import Register from "./Register";
 import CreatePost from "./CreatePost";
 import UserProfile from "./UserProfile"; 
+import MyMusic from "./MyMusic";
+import Playlist from "./Playlist";
 import "./App.css";
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
 					<Route path="/register" element={<Register />} />
 					<Route path="/create-post" element={<CreatePost />} /> 
 					<Route path="/UserProfile" element={<UserProfile />} />
+					<Route path="/music" element={<MyMusic />} />
+					<Route path="/playlist" element={<Playlist/>}/>
 				</Routes>
 			</div>
 			{!hideMusicPlayer && <MusicPlayer />} {/* MusicPlayer se oculta en login y register */}
