@@ -11,8 +11,8 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: (req, file) => {
     let resourceType = "image";
-    if (file.mimetype.startsWith("audio")) {
-      resourceType = "raw";
+    if (file.mimetype.startsWith("audio") || file.mimetype === "video/mp4") {
+      resourceType = "audio";
     }
     return {
       folder: "songs",
