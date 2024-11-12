@@ -1,4 +1,3 @@
-
 import PropTypes from 'prop-types';
 import './HomeFeed.css';
 
@@ -14,7 +13,15 @@ const Post = ({ avatar, name, time, contentImage }) => {
       </div>
       <img src={contentImage} alt="post content" className="post-image" />
       <div className="post-actions">
-        ❤️ 🔄 📌
+        <button className="like-button">
+          <img src="/icons/NotificationsIcon.svg" alt="Like Icon" className="like-icon" />
+        </button>
+        <button className="comment-button">
+          <img src="/icons/CommentIcon.svg" alt="Comment Icon" className="comment-icon" />
+        </button>
+        <button className="save-button">
+          <img src="/icons/FavoriteIcon.svg" alt="Save Icon" className="save-icon" />
+        </button>
       </div>
     </div>
   );

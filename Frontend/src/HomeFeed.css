@@ -1,17 +1,32 @@
-/* src/HomeFeed.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.feed-post {
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  background-color: #1c1c1e;
+  padding: 10px;  
+  border-radius: 10px;
+  margin-bottom: 40px;
+  
+}
+
 
 .home-feed {
   display: flex;
   height: 100vh;
+  overflow-y: hidden;
+  width: 100vw;
+  overflow: hidden;
 }
 
-.sidebar {
-  width: 200px;
-  background-color: #111;
-  color: #1db954;
-  padding: 2px;
-  display: flex;
-  flex-direction: column;
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
 .icon-button {
@@ -20,6 +35,7 @@
   background-color: #111111;
   border: none;
   padding: 20px 12px;
+  margin-left: 15px;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -30,105 +46,36 @@
   background-color: #333333;
 }
 
-.search-icon {
-  width: 34px;
-  height: 34px;
-  margin-right: 8px;
-}
-
 .icon-text {
   font-size: 20px;
   color: #1db954;
 }
 
-.sidebar h2 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-}
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
 
-.sidebar ul li {
-  font-family: 'Oswald', sans-serif;
-  margin: 20px 0;
-  font-size: 18px;
+.logo:hover, .logo:focus, .logo:visited {
+  color: #1db954;
 }
 
 .main-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 40px ;
-  overflow-y: hidden; /* Oculta el scroll vertical en el contenido principal */
-}
-.stories {
-  display: flex;
-  gap: 30px; /* Aumenta el espacio entre cada historia */
-  padding: 20px 0; /* Reduce el padding superior e inferior */
-  overflow-x: auto; /* Permite scroll horizontal si hay muchas historias */
-  align-items: center;
+  display: flex;      
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-left: 220px;
+  
 }
 
-.story {
-  text-align: center;
+.posts-grid {
+  display: grid;
+  margin-top: 30px;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas */  
+  padding: 20px;
+  margin-left: 100px;
+  margin-right: 300px;
 }
 
-.story-image {
-  width: 70px; /* Aumenta el tamaño de la imagen */
-  height: 70px;
-  border-radius: 50%;
-  border: 2px solid #1db954;
-}
 
-.story-name {
-  margin-top: 8px;
-  font-size: 16px;
-  color: #ffffff;
-  font-family: 'Oswald', sans-serif;
-}
-
-.feed-post {
-  margin-top: 40px; /* Agrega espacio entre las historias y el post */
-}
-
-.post-header {
-  display: flex;
-  align-items: center;
-}
-
-.post-header img {
-  border-radius: 50%;
-  height: 80px;
-  width: 80px;
-  margin-right: 10px;
-}
-
-.post-header h3 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 18px;
-}
-
-.post-image {
-  width: 100%;
-  max-width: 350px; /* Ajusta el ancho máximo para simular el estilo de Instagram */
-  height: auto;
-  aspect-ratio: 4 / 5; /* Relación de aspecto 4:5 */
-  border-radius: 8px; /* Bordes ligeramente redondeados */
-  margin-top: 10px;
-  object-fit: cover; /* Ajusta la imagen para llenar el espacio */
-}
-
-.post-actions {
-  font-size: 24px;
-  margin-top: 10px;
-}
 
 .music-player {
   display: flex;
@@ -144,31 +91,7 @@
   font-family: 'Oswald', sans-serif;
 }
 
-.profile-button {
-  margin-top: auto;
-}
-/* Centra el contenedor del post y establece un ancho máximo */
-.feed-post {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 500px; /* Ajusta el ancho máximo para que sea similar a Instagram */
-  margin: 0 auto; /* Centra el post horizontalmente */
-  background-color: #1c1c1e;
-  padding: 15px;
-  border-radius: 10px;
-}
 
-.feed-post {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 500px;
-  margin: 20px auto;
-  background-color: #1c1c1e;
-  padding: 15px;
-  border-radius: 10px;
-}
 
 .post-header {
   display: flex;
@@ -198,47 +121,97 @@
   object-fit: cover;
 }
 
+.profile-button {
+  margin-top: auto;
+}
+
+.search-icon {
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+}
 .post-actions {
-  font-size: 24px;
-  margin-top: 10px;
+  display: flex;
+  gap: 15px; /* Espacio entre cada botón */
 }
 
-.home-feed {
-  display: flex;
-  height: 100vh; /* Ocupa toda la altura de la ventana */
-  overflow-y: hidden; /* Oculta el desbordamiento vertical global */
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  overflow-y: auto; /* Permite desplazamiento vertical en el contenido principal */
-}
-* {
-  margin: 0;
+.like-button, .comment-button, .save-button {
+  background: none;
+  border: none;
+  cursor: pointer;
   padding: 0;
-  box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  overflow: hidden;
+.like-icon, .comment-icon, .save-icon {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
 }
 
-.home-feed {
+.like-button:hover .like-icon,
+.comment-button:hover .comment-icon,
+.save-button:hover .save-icon {
+  transform: scale(1.2); /* Efecto de aumento al pasar el cursor */
+}
+.sidebar {
+  width: 230px;
+  background-color: #111;
+  color: #1db954;
+  padding: 20px;
+  padding-left: 0;
+  margin-left: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
   display: flex;
   height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  flex-direction: column;
 }
 
-.main-content {
+.sidebar h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-top: 40px;
+  padding: 0;
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  overflow-y: auto;
-  overflow-x: hidden;
+}
+
+.sidebar ul li {
+  font-family: 'Oswald', sans-serif;
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.stories {
+  display: flex;
+  gap: 30px;
+  padding: 20px 0;
+  padding-left: 40px;
+  overflow-x: auto;
+  align-items: center;
+}
+
+.story {
+  text-align: center;
+}
+
+.story-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #1db954;
+}
+
+.story-name {
+  margin-top: 8px;
+  font-size: 16px;
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
 }

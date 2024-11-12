@@ -1,0 +1,55 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	overflow: hidden; /* Evita el scroll en la página completa */
+}
+
+.explore-page {
+	display: flex;
+	height: 100vh;
+	color: #ffffff;
+}
+
+.explore-content {
+	margin-left: 220px; /* Espacio para el sidebar */
+	padding-right: 10px; /* Espacio adicional para evitar que el contenido choque con la barra */
+	height: calc(100vh - 40px); /* Ajusta la altura según el espacio disponible */
+	overflow-y: auto; /* Barra de desplazamiento dinámica */
+	box-sizing: border-box;
+
+	/* Ocultar barra de desplazamiento pero permitir scroll */
+	scrollbar-width: none; /* Firefox */
+}
+.explore-content::-webkit-scrollbar {
+	display: none; /* Chrome, Safari y Opera */
+}
+
+.explore-title {
+	font-size: 64px;
+	font-weight: bold;
+	color: #1db954;
+	margin: 20px;
+	font-family: 'Oswald', sans-serif;
+}
+
+.explore-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	gap: 2px; /* Reduce el espacio entre las imágenes */
+}
+
+.explore-item {
+	overflow: hidden;
+}
+
+.explore-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s ease;
+	border-radius: 0; /* Elimina los bordes redondeados */
+}
+
+.explore-image:hover {
+	transform: scale(1.1);
+}

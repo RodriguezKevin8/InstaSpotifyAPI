@@ -3,7 +3,7 @@
 .stories {
   display: flex;
   gap: 20px; /* Aumenta el espacio entre historias */
-  padding: 70px 0; /* Ajusta el padding superior e inferior */
+  padding: 46px 0; /* Ajusta el padding superior e inferior */
   overflow-x: auto; /* Permite el scroll horizontal, sin scroll vertical */
   overflow-y: hidden; /* Oculta el scroll vertical */
   align-items: center; /* Centra verticalmente las historias */
