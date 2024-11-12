@@ -12,10 +12,8 @@ export const createPerfilController = async (req, res) => {
     const perfilData = {
       bio: req.body.bio,
       avatar_url: req.file ? req.file.path : null, // URL del avatar desde Cloudinary
-      birth_date: req.body.birth_date ? new Date(req.body.birth_date) : null, // Fecha de nacimiento enviada desde el cliente
-      usuario: {
-        connect: { id: parseInt(req.body.usuario_id) },
-      },
+      birth_date: req.body.birth_date ? new Date(req.body.birth_date) : null,
+      usuario_id: req.body.usuario_id,
     };
 
     const newPerfil = await createPerfil(perfilData);
@@ -28,7 +26,7 @@ export const createPerfilController = async (req, res) => {
 // Obtener un perfil por ID de usuario
 export const getPerfilByUserIdController = async (req, res) => {
   try {
-    const userId = parseInt(req.params.userId);
+    const userId = parseInt(req.params.id);
     const perfil = await getPerfilByUserId(userId);
     if (!perfil) {
       return res.status(404).json({ error: "Perfil no encontrado" });

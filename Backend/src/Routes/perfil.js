@@ -4,6 +4,7 @@ import upload from "../config/multer.js"; // Importar configuración de Cloudina
 import {
   createPerfilController,
   updatePerfilController,
+  getPerfilByUserIdController,
 } from "../Controllers/perfilController.js";
 
 const router = express.Router();
@@ -13,5 +14,7 @@ router.post("/", upload.single("avatar_url"), createPerfilController);
 
 // Ruta para actualizar un perfil con avatar
 router.put("/:userId", upload.single("avatar_url"), updatePerfilController);
+
+router.get("/:id", getPerfilByUserIdController);
 
 export default router;

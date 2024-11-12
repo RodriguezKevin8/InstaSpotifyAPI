@@ -18,7 +18,7 @@ const Profile = () => {
   useEffect(() => {
     // Obtener el user_id desde localStorage
     const userResponse = JSON.parse(localStorage.getItem("user"));
-    const userId = userResponse.value.id;
+    const userId = userResponse?.value?.id;
 
     if (userId) {
       // Llamada para obtener el perfil del usuario
@@ -27,13 +27,15 @@ const Profile = () => {
           const response = await axios.get(
             `http://localhost:3000/perfil/${userId}`
           );
-          if (response.data.status) {
-            setProfileData(response.data.value); // El perfil existe
+          if (response.data.perfil) {
+            setProfileData(response.data); // El perfil existe
+            setIsCreatingProfile(false);
           } else {
             setIsCreatingProfile(true); // El perfil no existe
           }
         } catch (error) {
           console.error("Error al obtener el perfil:", error);
+          setIsCreatingProfile(true); // Mostrar formulario en caso de error
         }
       };
 
@@ -60,23 +62,16 @@ const Profile = () => {
     const data = new FormData();
     data.append("bio", formData.bio);
     data.append("birth_date", formData.birth_date);
-    data.append("avatar", formData.avatar); // Nombre del archivo de imagen
+    data.append("avatar_url", formData.avatar); // Archivo de imagen
     data.append("usuario_id", userId); // Enviar usuario_id desde localStorage
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/perfil/create",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      if (response.data.status) {
-        setProfileData(response.data.value); // Guardar el perfil creado
-        setIsCreatingProfile(false);
-      }
+      const response = await axios.post("http://localhost:3000/perfil", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      window.location.reload();
     } catch (error) {
       console.error("Error al crear el perfil:", error);
     }
@@ -141,7 +136,7 @@ const Profile = () => {
           // Mostrar perfil existente
           <div className="profile-header">
             <img
-              src={profileData.avatar_url || "/img/default-avatar.jpg"}
+              src={profileData.perfil.avatar_url || "/img/default-avatar.jpg"}
               alt="Profile"
               className="profile-image"
             />
@@ -151,25 +146,41 @@ const Profile = () => {
               </div>
               <div className="profile-stats">
                 <span>
-                  <strong>{profileData.posts || 0}</strong> Publicaciones
+                  <strong>{0}</strong> Publicaciones{" "}
+                  {/* Ajusta si tienes publicaciones */}
                 </span>
                 <span>
-                  <strong>{profileData.followers || 0}</strong> Seguidores
+                  <strong>
+                    {
+                      profileData._count
+                        .seguimiento_seguimiento_follower_idTousuario
+                    }
+                  </strong>{" "}
+                  Seguidores
                 </span>
                 <span>
-                  <strong>{profileData.following || 0}</strong> Seguidos
+                  <strong>
+                    {
+                      profileData._count
+                        .seguimiento_seguimiento_followed_idTousuario
+                    }
+                  </strong>{" "}
+                  Seguidos
                 </span>
               </div>
               <div className="profile-name">
-                <h4>{profileData.name || "Nombre"}</h4>
+                <h4>{profileData.perfil.bio || "Nombre"}</h4>
                 <p className="profile-bio">
-                  {profileData.bio || "Sin biografía"}
+                  {profileData.perfil.bio || "Sin biografía"}
                 </p>
               </div>
             </div>
             <div className="profile-buttons">
               <button className="edit-button">Editar Perfil</button>
-              <button className="earnings-button">Ver Ganancias</button>
+
+              {profileData.role === "Artista" && (
+                <button className="earnings-button">Ver Ganancias</button>
+              )}
               <button
                 className="earnings-button"
                 onClick={() => navigate("/create-post")}
