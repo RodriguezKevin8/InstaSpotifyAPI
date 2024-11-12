@@ -4,6 +4,10 @@ import {
   incrementarInteraccionEnAnuncio,
 } from "../Models/anuncioModel.js";
 
+import { PrismaClient, Prisma } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
 export const createNewAnuncio = async (req, res) => {
   try {
     const newAnuncio = await createAnuncio(req.body);
@@ -27,6 +31,26 @@ export const incrementarMontoPorInteraccion = async (req, res) => {
       monto
     );
     res.status(200).json(updatedAnuncio);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Función para obtener todos los anuncios
+export const getAllAnuncios = async (req, res) => {
+  try {
+    const anuncios = await prisma.anuncio.findMany();
+    res.status(200).json(anuncios);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getRandomAnuncios = async (req, res) => {
+  try {
+    const anuncios =
+      await prisma.$queryRaw`SELECT * FROM "anuncio" ORDER BY RANDOM() LIMIT 5`;
+    res.status(200).json(anuncios);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

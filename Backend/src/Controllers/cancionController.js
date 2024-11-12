@@ -7,6 +7,9 @@ import {
   deleteCancion,
 } from "../Models/cancionModel.js";
 
+import { PrismaClient, Prisma } from "@prisma/client";
+
+const prisma = new PrismaClient();
 export const getCanciones = async (req, res) => {
   try {
     const canciones = await getAllCanciones();
@@ -92,6 +95,66 @@ export const deleteExistingCancion = async (req, res) => {
   try {
     await deleteCancion(req.params.id);
     res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const incrementarReproduccion = async (req, res) => {
+  try {
+    const cancionId = parseInt(req.params.cancionId, 10);
+    if (isNaN(cancionId)) {
+      return res
+        .status(400)
+        .json({ error: "ID de la canción debe ser un número válido" });
+    }
+
+    // Obtener la canción y su artista
+    const cancion = await prisma.cancion.findUnique({
+      where: { id: cancionId },
+      select: {
+        artist_id: true, // ID del artista
+        reproducciones: true, // Número actual de reproducciones
+      },
+    });
+
+    if (!cancion) {
+      return res.status(404).json({ error: "Canción no encontrada" });
+    }
+
+    // Incrementar reproducciones de la canción
+    await prisma.cancion.update({
+      where: { id: cancionId },
+      data: {
+        reproducciones: {
+          increment: 1,
+        },
+      },
+    });
+
+    // Incremento de ganancias por cada reproducción
+    const montoPorReproduccion = new Prisma.Decimal(0.01);
+
+    // Actualizar las ganancias del artista en la tabla ganancias
+    await prisma.ganancias.updateMany({
+      where: { usuario_id: cancion.artist_id },
+      data: {
+        ganancias_por_cancion: {
+          increment: montoPorReproduccion,
+        },
+        total_ganancias: {
+          increment: montoPorReproduccion,
+        },
+        total_reproducciones: {
+          increment: 1,
+        },
+      },
+    });
+
+    res.status(200).json({
+      message: "Reproducción registrada y ganancias actualizadas",
+      incremento: montoPorReproduccion.toFixed(2),
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
