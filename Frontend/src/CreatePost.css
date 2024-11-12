@@ -1,0 +1,56 @@
+/* src/CreatePost.css */
+
+.create-post {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #fff;
+  }
+  
+  .create-post h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1db954;
+    font-family: 'Oswald', sans-serif;
+  }
+  
+  .image-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #888;
+  }
+  
+  input[type="file"] {
+    margin-bottom: 20px;
+  }
+  
+  .preview-image {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px 0;
+    display: block;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+  }
+  
+  .submit-button {
+    background-color: #1db954;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
