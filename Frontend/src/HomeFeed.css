@@ -15,7 +15,15 @@
   
 }
 
-
+.logo {
+  font-size: 30px;
+  font-weight: bold;
+  color: #1db954;
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: -20px;
+  padding-bottom: 10px;
+}
 .home-feed {
   display: flex;
   height: 100vh;
@@ -170,7 +178,7 @@ html, body {
 
 .sidebar h2 {
   font-family: 'Oswald', sans-serif;
-  font-size: 14px;
+  font-size: 40px;
   font-weight: 700;
 }
 

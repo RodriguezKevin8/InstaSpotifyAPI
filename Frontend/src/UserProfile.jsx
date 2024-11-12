@@ -1,11 +1,9 @@
-// src/Profile.jsx
+// src/UserProfile.jsx
 import './HomeFeed.css';
-import './Profile.css';
-import { Link, useNavigate } from 'react-router-dom';
+import './UserProfile.css';
+import { Link } from 'react-router-dom';
 
-const Profile = () => {
-  const navigate = useNavigate();
-
+const UserProfile = () => {
   return (
     <div className="home-feed">
       {/* Sidebar */}
@@ -39,44 +37,46 @@ const Profile = () => {
 
       {/* Main Content */}
       <div className="main-content">
-        <div className="profile-header">
-          <img src="/img/romeo.jpeg" alt="Profile" className="profile-image" />
-          
-          <div className="profile-details">
-            <div className="profile-username">R.SANTOS</div> {/* Nombre de usuario */}
-            <div className="profile-stats">
-              <span><strong>3</strong> Publicaciones</span>
-              <span><strong>23 M</strong> Seguidores</span>
-              <span><strong>30</strong> Seguidos</span>
+        {/* Profile Header */}
+        <div className="user-profile-header">
+          <img src="/img/romeo.jpeg" alt="Profile" className="user-profile-image" />
+          <div className="user-profile-username">R.SANTOS</div>
+          <div className="user-profile-details">
+            <div className="user-profile-stats">
+              <div className="stat-item">
+                <span className="stat-value">3</span>
+                <span className="stat-label"> Publicaciones</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-value">23 M</span>
+                <span className="stat-label"> Seguidores</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-value">30</span>
+                <span className="stat-label"> Seguidos</span>
+              </div>
             </div>
-            <div className="profile-name">
-              <h4>Romeo Santos</h4>
-              <p className="profile-bio">El chico de las poesías</p>
+            <div className="user-profile-bio">
+              <h2>Romeo Santos</h2>
+              <p>El chico de las poesías</p>
             </div>
           </div>
-
-          
         </div>
-        <div className="profile-buttons">
-            <button className="edit-button">Editar Perfil</button>
-            <button className="earnings-button">Ver Ganancias</button>
-            <button className="earnings-button" onClick={() => navigate('/create-post')}>Crear Publicacion</button>
-          </div>
 
         {/* Tabs */}
-        <div className="profile-tabs">
-          <button className="tab-button active">Publicaciones</button>
+        <div className="user-profile-tabs">
+          <button className="user-tab-button active">Publicaciones</button>
         </div>
 
         {/* Posts Section */}
-        <div className="profile-posts">
-          <img src="/img/post.jpg" alt="Post 1" className="post-thumbnail" />
-          <img src="/img/post2.jpg" alt="Post 2" className="post-thumbnail" />
-          <img src="/img/post3.jpg" alt="Post 3" className="post-thumbnail" />
+        <div className="user-profile-posts">
+          <img src="/img/post.jpg" alt="Post 1" className="user-post-thumbnail" />
+          <img src="/img/post2.jpg" alt="Post 2" className="user-post-thumbnail" />
+          <img src="/img/post3.jpg" alt="Post 3" className="user-post-thumbnail" />
         </div>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default UserProfile;
