@@ -1,0 +1,105 @@
+/* src/UserProfile.css */
+
+.user-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+  }
+  
+  .user-profile-image {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+  }
+  
+  .user-profile-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .user-profile-username {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1db954;
+    margin-left: 300px;
+    margin-top: 20px;
+    
+  }
+  
+  .user-profile-stats {
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+    color: #888;
+    margin-left: -300px;
+    margin-top: 50px;
+    
+  }
+  
+  .user-profile-stats span {
+    color: #fff;
+  }
+  
+  .user-profile-name {
+    font-size: 18px;    
+  }
+  
+  .user-profile-bio {
+    font-size: 16px;
+    color: #888;
+    margin-left: -800px;
+    margin-top: 30px;
+    
+  }
+  
+  .user-profile-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: 220px;
+  }
+  
+  .user-edit-button,
+  .user-earnings-button {
+    background-color: #333;
+    color: #fff;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .user-profile-tabs {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .user-tab-button {
+    background: none;
+    border: none;
+    color: #1db954;
+    font-size: 18px;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .user-tab-button.active {
+    border-bottom: 2px solid #1db954;
+  }
+  
+  .user-profile-posts {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .user-post-thumbnail {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
