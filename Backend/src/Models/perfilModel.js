@@ -11,7 +11,7 @@ export default class perfil {
       data: {
         bio: perfilData.bio,
         avatar_url: perfilData.avatar_url,
-        birth_date: perfilData.birth_date,
+        birth_date: new Date(),
       },
     });
     await prisma.usuario.update({
