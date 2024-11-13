@@ -7,6 +7,7 @@ import {
   createNewAlbum,
   updateExistingAlbum,
   deleteExistingAlbum,
+  getAlbumsByArtist,
 } from "../Controllers/albumController.js";
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.get("/:id", getAlbum); // Obtener un álbum por ID
 router.post("/", upload.single("portada_url"), createNewAlbum); // Crear un nuevo álbum con portada
 router.put("/:id", upload.single("portada_url"), updateExistingAlbum); // Actualizar un álbum con nueva portada si se sube
 router.delete("/:id", deleteExistingAlbum); // Eliminar un álbum por ID
+router.get("/usuario/:id", getAlbumsByArtist);
 
 export default router;

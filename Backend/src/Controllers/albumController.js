@@ -7,12 +7,29 @@ import {
   deleteAlbum,
 } from "../Models/albumModel.js";
 
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
 export const getAlbums = async (req, res) => {
   try {
     const albums = await getAllAlbums();
     res.status(200).json(albums);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+export const getAlbumsByArtist = async (req, res) => {
+  const artistId = parseInt(req.params.id);
+
+  try {
+    const albums = await prisma.album.findMany({
+      where: { artist_id: artistId },
+    });
+    res.status(200).json(albums);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al obtener los álbumes del artista." });
   }
 };
 
