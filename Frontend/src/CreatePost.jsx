@@ -6,7 +6,7 @@ import "./CreatePost.css";
 
 const CreatePost = () => {
   const [image, setImage] = useState(null);
-  const [description, setDescription] = useState("");
+  const [descripcion, setDescripcion] = useState(""); // Asegúrate de usar `descripcion` aquí
   const navigate = useNavigate();
 
   // Función para manejar el cambio de imagen
@@ -30,8 +30,11 @@ const CreatePost = () => {
     // Crear un FormData para enviar la imagen y descripción
     const formData = new FormData();
     formData.append("content_url", image); // Enviar el archivo de imagen
-    formData.append("descripcion", description); // Enviar la descripción
+    formData.append("descripcion", descripcion); // Enviar la descripción
     formData.append("user_id", usuarioId); // Enviar el ID del usuario
+
+    // Comprobar que `descripcion` esté en el FormData
+    console.log("Contenido de `descripcion` en FormData:", formData.get("descripcion")); 
 
     try {
       // Hacer la solicitud POST a la API de creación de publicación
@@ -76,11 +79,11 @@ const CreatePost = () => {
           />
         )}
 
-        <label htmlFor="description">Descripción</label>
+        <label htmlFor="descripcion">Descripción</label>
         <textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          id="descripcion"
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
           placeholder="Escribe una descripción..."
           required
         />

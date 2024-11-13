@@ -1,3 +1,4 @@
+// src/Controllers/publicacionController.js
 import {
   createPublicacion,
   deletePublicacion,
@@ -17,17 +18,15 @@ export const getPublicaciones = async (req, res) => {
 export const createNewPublicacion = async (req, res) => {
   try {
     const data = {
-      description: req.body.description,
+      descripcion: req.body.descripcion,  // Cambiado para asegurar que se usa `descripcion`
       content_url: req.file ? req.file.path : null,
       user_id: req.body.user_id ? parseInt(req.body.user_id) : null,
     };
+
     const newPublicacion = await createPublicacion(data);
     res.status(201).json(newPublicacion);
   } catch (error) {
-    console.error(
-      "Error en createNewPublicacion:",
-      JSON.stringify(error, null, 2)
-    );
+    console.error("Error en createNewPublicacion:", JSON.stringify(error, null, 2));
     res.status(500).json({
       error: error.message,
     });

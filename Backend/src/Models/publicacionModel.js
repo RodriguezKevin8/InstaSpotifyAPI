@@ -7,7 +7,7 @@ export const createPublicacion = async (data) => {
   return await prisma.publicacion.create({
     data: {
       content_url: data.content_url,
-      description: data.description,
+      descripcion: data.descripcion, // Cambiado a `descripcion`
       user_id: data.user_id,
       created_at: new Date(),
     },

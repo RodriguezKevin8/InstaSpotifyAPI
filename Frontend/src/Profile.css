@@ -1,98 +1,87 @@
-/* src/Profile.css */
-
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 20px 0;
+/* Contenedor principal */
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  height: 100vh;
+  background-color: #121212;
+  color: #fff;
 }
 
-.profile-image {
-  height: 120px;
-  width: 120px;
-  border-radius: 50%;
-}
-
-.profile-details {
-  flex: 1;
+/* Barra lateral */
+.sidebar {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  padding: 1rem;
+  background-color: #000;
 }
 
-.profile-username {
-  font-size: 30px;
-  font-weight: bold;
-  margin-left: -500px;
+.title {
   color: #1db954;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.profile-stats {
+.menu {
   display: flex;
-  gap: 20px;
-  font-size: 16px;
-  color: #888;
-  margin-left: 100px;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.profile-stats span {
-  color: #fff;
+.menu a {
+  color: #1db954;
+  text-decoration: none;
 }
 
-.profile-name {
-  font-size: 18px;
-  margin-left: -500px;
-}
-
-.profile-bio {
-  font-size: 16px;
-  color: #888;
-}
-
-.profile-buttons {
+/* Sección del perfil */
+.profile {
   display: flex;
-  gap: 10px;
-  margin-left: 220px;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
 }
 
-.edit-button,
-.earnings-button {
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  color: #1db954;
+  font-size: 1.5rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.bio {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Botones de acciones */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.actions button {
   background-color: #333;
   color: #fff;
-  padding: 5px 15px;
   border: none;
-  border-radius: 5px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-}
-
-.profile-tabs {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.tab-button {
-  background: none;
-  border: none;
-  color: #1db954;
-  font-size: 18px;
-  margin: 0 10px;
-  cursor: pointer;
-}
-
-.tab-button.active {
-  border-bottom: 2px solid #1db954;
-}
-
-.profile-posts {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.post-thumbnail {
-  width: 150px;
-  height: 150px;
-  border-radius: 8px;
-  object-fit: cover;
 }
