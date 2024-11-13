@@ -1,58 +1,96 @@
 // src/CreatePost.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./CreatePost.css";
 
 const CreatePost = () => {
-	const [image, setImage] = useState(null);
-	const [description, setDescription] = useState("");
-	const navigate = useNavigate();
+  const [image, setImage] = useState(null);
+  const [description, setDescription] = useState("");
+  const navigate = useNavigate();
 
-	const handleImageChange = (e) => {
-		setImage(URL.createObjectURL(e.target.files[0]));
-	};
+  // Función para manejar el cambio de imagen
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]); // Guardar el archivo de imagen seleccionado
+  };
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		// Aquí puedes manejar la lógica de envío para guardar la imagen y descripción.
-		console.log("Publicación creada:", { image, description });
-		// Navegar de regreso al perfil o al feed
-		navigate("/profile");
-	};
+  // Función para manejar el envío del formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-	return (
-		<div className="create-post">
-			<h2>Crear Publicación</h2>
-			<form onSubmit={handleSubmit}>
-				<label htmlFor="image-upload" className="image-label">
-					Selecciona una imagen
-				</label>
-				<input
-					type="file"
-					id="image-upload"
-					accept="image/*"
-					onChange={handleImageChange}
-					required
-				/>
-				{image && (
-					<img src={image} alt="Vista previa" className="preview-image" />
-				)}
+    // Obtener usuario_id del localStorage
+    const user = JSON.parse(localStorage.getItem("user"));
+    const usuarioId = user?.value?.id;
 
-				<label htmlFor="description">Descripción</label>
-				<textarea
-					id="description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-					placeholder="Escribe una descripción..."
-					required
-				/>
+    if (!usuarioId) {
+      alert("Usuario no identificado");
+      return;
+    }
 
-				<button type="submit" className="submit-button">
-					Publicar
-				</button>
-			</form>
-		</div>
-	);
+    // Crear un FormData para enviar la imagen y descripción
+    const formData = new FormData();
+    formData.append("content_url", image); // Enviar el archivo de imagen
+    formData.append("descripcion", description); // Enviar la descripción
+    formData.append("user_id", usuarioId); // Enviar el ID del usuario
+
+    try {
+      // Hacer la solicitud POST a la API de creación de publicación
+      const response = await axios.post(
+        "http://localhost:3000/publicacion",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("Publicación creada:", response.data);
+      // Navegar de regreso al perfil o al feed después de crear la publicación
+      navigate("/profile");
+    } catch (error) {
+      console.error("Error al crear la publicación:", error);
+      alert("Hubo un error al crear la publicación.");
+    }
+  };
+
+  return (
+    <div className="create-post">
+      <h2>Crear Publicación</h2>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="image-upload" className="image-label">
+          Selecciona una imagen
+        </label>
+        <input
+          type="file"
+          id="image-upload"
+          accept="image/*"
+          onChange={handleImageChange}
+          required
+        />
+        {image && (
+          <img
+            src={URL.createObjectURL(image)}
+            alt="Vista previa"
+            className="preview-image"
+          />
+        )}
+
+        <label htmlFor="description">Descripción</label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Escribe una descripción..."
+          required
+        />
+
+        <button type="submit" className="submit-button">
+          Publicar
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default CreatePost;

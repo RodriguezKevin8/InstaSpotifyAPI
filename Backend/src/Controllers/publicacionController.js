@@ -2,6 +2,7 @@ import {
   createPublicacion,
   deletePublicacion,
   getallpublicaciones,
+  getPublicacionesByUsuarioId,
 } from "../Models/publicacionModel.js";
 
 export const getPublicaciones = async (req, res) => {
@@ -30,6 +31,23 @@ export const createNewPublicacion = async (req, res) => {
     res.status(500).json({
       error: error.message,
     });
+  }
+};
+
+export const getPublicacionesByUsuarioController = async (req, res) => {
+  try {
+    const usuarioId = parseInt(req.params.usuarioId);
+    const publicaciones = await getPublicacionesByUsuarioId(usuarioId);
+
+    if (!publicaciones || publicaciones.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No se encontraron publicaciones para este usuario" });
+    }
+
+    res.status(200).json(publicaciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
