@@ -20,6 +20,8 @@ import Playlist from "./Playlist";
 import Cancion from "./Cancion";
 import Album from "./Album";
 import CreatePlaylist from "./CreatePlaylist";
+import AllSongs from "./AllSongs";
+import GenreList from "./GenreList";
 import "./App.css";
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
           <Route path="/cancion" element={<Cancion />} />
           <Route path="/album" element={<Album />} />
           <Route path="/create-playlist" element={<CreatePlaylist />} />
+          <Route path="/songs/:genreId" element={<AllSongs />} />
+          <Route path="/generos" element={<GenreList />} />
         </Routes>
       </div>
       {!hideMusicPlayer && <MusicPlayer />}{" "}

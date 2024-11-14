@@ -8,6 +8,7 @@ import {
   updateExistingCancion,
   deleteExistingCancion,
   incrementarReproduccion,
+  getCancionesByGeneroController,
 } from "../Controllers/cancionController.js";
 
 const router = express.Router();
@@ -36,5 +37,6 @@ router.put(
 
 router.delete("/:id", deleteExistingCancion); // Eliminar una canción por ID
 router.post("/:cancionId/reproduccion", incrementarReproduccion);
+router.get("/genero/:genreId", getCancionesByGeneroController);
 
 export default router;

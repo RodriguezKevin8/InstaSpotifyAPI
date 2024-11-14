@@ -14,6 +14,17 @@ export const getAllCanciones = async () => {
   });
 };
 
+export const getCancionesByGenero = async (genreId) => {
+  return await prisma.cancion.findMany({
+    where: { genre_id: Number(genreId) },
+    include: {
+      genero: true,
+      album: true,
+      usuario: true,
+    },
+  });
+};
+
 // Obtener una canción por ID
 export const getCancionById = async (id) => {
   return await prisma.cancion.findUnique({

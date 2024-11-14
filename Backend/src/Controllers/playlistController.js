@@ -6,7 +6,10 @@ import {
   addSongToPlaylist,
   removeSongFromPlaylist,
   deletePlaylist,
+  getUserPlaylists,
 } from "../Models/playlistModel.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
 export const getPlaylists = async (req, res) => {
   try {
@@ -50,12 +53,29 @@ export const createNewPlaylist = async (req, res) => {
 
 export const addSong = async (req, res) => {
   try {
-    const addedSong = await addSongToPlaylist(
-      req.params.playlistId,
-      req.body.cancionId
-    );
+    const playlistId = parseInt(req.params.playlistId, 10);
+    const cancionId = parseInt(req.body.cancionId, 10);
+
+    // Verificar si la canción ya está en la playlist
+    const existingEntry = await prisma.playlistcancion.findUnique({
+      where: {
+        playlist_id_cancion_id: {
+          playlist_id: Number(playlistId),
+          cancion_id: Number(cancionId),
+        },
+      },
+    });
+    if (existingEntry) {
+      return res
+        .status(409)
+        .json({ error: "La canción ya está en la playlist." });
+    }
+
+    // Si no está, la añadimos
+    const addedSong = await addSongToPlaylist(playlistId, cancionId);
     res.status(201).json(addedSong);
   } catch (error) {
+    console.error("Error en el controlador addSong:", error);
     res.status(500).json({ error: error.message });
   }
 };
@@ -73,6 +93,17 @@ export const deleteExistingPlaylist = async (req, res) => {
   try {
     await deletePlaylist(req.params.id);
     res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getPlaylistsByUser = async (req, res) => {
+  const userId = parseInt(req.params.userId);
+
+  try {
+    const playlists = await getUserPlaylists(userId);
+    res.status(200).json(playlists);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

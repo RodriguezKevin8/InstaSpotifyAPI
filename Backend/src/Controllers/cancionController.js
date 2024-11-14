@@ -5,6 +5,7 @@ import {
   createCancion,
   updateCancion,
   deleteCancion,
+  getCancionesByGenero,
 } from "../Models/cancionModel.js";
 
 import { PrismaClient, Prisma } from "@prisma/client";
@@ -155,6 +156,23 @@ export const incrementarReproduccion = async (req, res) => {
       message: "Reproducción registrada y ganancias actualizadas",
       incremento: montoPorReproduccion.toFixed(2),
     });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getCancionesByGeneroController = async (req, res) => {
+  try {
+    const genreId = req.params.genreId;
+    const canciones = await getCancionesByGenero(genreId);
+
+    if (!canciones || canciones.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No se encontraron canciones para este género" });
+    }
+
+    res.status(200).json(canciones);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

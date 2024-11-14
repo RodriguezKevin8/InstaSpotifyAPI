@@ -8,6 +8,7 @@ import {
   addSong,
   removeSong,
   deleteExistingPlaylist,
+  getPlaylistsByUser,
 } from "../Controllers/playlistController.js";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.post("/", upload.single("portada_url"), createNewPlaylist); // Crear una 
 router.post("/:playlistId/song", addSong); // Agregar una canción a una playlist
 router.delete("/:playlistId/song", removeSong); // Eliminar una canción de una playlist
 router.delete("/:id", deleteExistingPlaylist); // Eliminar una playlist
+router.get("/user/:userId", getPlaylistsByUser);
 
 export default router;

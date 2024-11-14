@@ -41,8 +41,8 @@ export const createPlaylist = async (data) => {
 export const addSongToPlaylist = async (playlistId, cancionId) => {
   return await prisma.playlistcancion.create({
     data: {
-      playlist_id: playlistId,
-      cancion_id: cancionId,
+      playlist_id: Number(playlistId),
+      cancion_id: Number(cancionId),
     },
   });
 };
@@ -63,5 +63,13 @@ export const removeSongFromPlaylist = async (playlistId, cancionId) => {
 export const deletePlaylist = async (id) => {
   return await prisma.playlist.delete({
     where: { id: parseInt(id) },
+  });
+};
+
+export const getUserPlaylists = async (userId) => {
+  return await prisma.playlist.findMany({
+    where: {
+      user_id: userId,
+    },
   });
 };
