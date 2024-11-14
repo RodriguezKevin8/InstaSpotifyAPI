@@ -164,16 +164,30 @@ export const incrementarReproduccion = async (req, res) => {
 export const getCancionesByGeneroController = async (req, res) => {
   try {
     const genreId = req.params.genreId;
+    console.log("Género ID recibido:", genreId); // Log para verificar el género
     const canciones = await getCancionesByGenero(genreId);
 
     if (!canciones || canciones.length === 0) {
+      console.log("No se encontraron canciones para este género.");
       return res
         .status(404)
         .json({ error: "No se encontraron canciones para este género" });
     }
 
-    res.status(200).json(canciones);
+    // Modificar las canciones para incluir solo los nombres de álbum y usuario
+    const formattedCanciones = canciones.map((cancion) => {
+      console.log("Procesando canción:", cancion);
+      return {
+        ...cancion,
+        album: cancion.album?.title || "Álbum desconocido",
+        usuario: cancion.usuario?.nombre || "Artista desconocido",
+      };
+    });
+
+    console.log("Canciones formateadas:", formattedCanciones); // Log final
+    res.status(200).json(formattedCanciones);
   } catch (error) {
+    console.error("Error en getCancionesByGeneroController:", error); // Captura del error completo
     res.status(500).json({ error: error.message });
   }
 };

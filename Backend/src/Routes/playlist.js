@@ -9,6 +9,7 @@ import {
   removeSong,
   deleteExistingPlaylist,
   getPlaylistsByUser,
+  getPlaylistDetails,
 } from "../Controllers/playlistController.js";
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.post("/:playlistId/song", addSong); // Agregar una canción a una playlis
 router.delete("/:playlistId/song", removeSong); // Eliminar una canción de una playlist
 router.delete("/:id", deleteExistingPlaylist); // Eliminar una playlist
 router.get("/user/:userId", getPlaylistsByUser);
+router.get("/:playlistId/details", getPlaylistDetails);
 
 export default router;

@@ -41,8 +41,8 @@ export const createPlaylist = async (data) => {
 export const addSongToPlaylist = async (playlistId, cancionId) => {
   return await prisma.playlistcancion.create({
     data: {
-      playlist_id: Number(playlistId),
-      cancion_id: Number(cancionId),
+      playlist_id: playlistId,
+      cancion_id: cancionId,
     },
   });
 };
@@ -70,6 +70,24 @@ export const getUserPlaylists = async (userId) => {
   return await prisma.playlist.findMany({
     where: {
       user_id: userId,
+    },
+  });
+};
+
+export const getPlaylistDetailsById = async (playlistId) => {
+  return await prisma.playlist.findUnique({
+    where: { id: parseInt(playlistId) },
+    include: {
+      playlistcancion: {
+        include: {
+          cancion: {
+            include: {
+              usuario: { select: { nombre: true } }, // Selecciona solo el nombre del usuario como artista
+              album: { select: { title: true } }, // Selecciona solo el nombre del álbum
+            },
+          },
+        },
+      },
     },
   });
 };

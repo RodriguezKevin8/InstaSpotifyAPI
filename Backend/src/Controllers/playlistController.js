@@ -7,6 +7,7 @@ import {
   removeSongFromPlaylist,
   deletePlaylist,
   getUserPlaylists,
+  getPlaylistDetailsById,
 } from "../Models/playlistModel.js";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
@@ -105,6 +106,22 @@ export const getPlaylistsByUser = async (req, res) => {
     const playlists = await getUserPlaylists(userId);
     res.status(200).json(playlists);
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getPlaylistDetails = async (req, res) => {
+  try {
+    const playlistId = parseInt(req.params.playlistId, 10);
+    const playlist = await getPlaylistDetailsById(playlistId);
+
+    if (!playlist) {
+      return res.status(404).json({ error: "Playlist no encontrada" });
+    }
+
+    res.status(200).json(playlist);
+  } catch (error) {
+    console.error("Error en getPlaylistDetails:", error);
     res.status(500).json({ error: error.message });
   }
 };

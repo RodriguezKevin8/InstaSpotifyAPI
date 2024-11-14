@@ -19,8 +19,16 @@ export const getCancionesByGenero = async (genreId) => {
     where: { genre_id: Number(genreId) },
     include: {
       genero: true,
-      album: true,
-      usuario: true,
+      album: {
+        select: {
+          title: true, // Selecciona solo el nombre del álbum
+        },
+      },
+      usuario: {
+        select: {
+          nombre: true, // Selecciona solo el nombre del usuario
+        },
+      },
     },
   });
 };
