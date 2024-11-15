@@ -37,13 +37,12 @@ export const getPerfilByUserIdController = async (req, res) => {
   }
 };
 
-// Actualizar un perfil y recibir la fecha desde el cuerpo de la solicitud
 export const updatePerfilController = async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
     const perfilData = {
       bio: req.body.bio,
-      avatar_url: req.file ? req.file.path : req.body.avatar_url, // Actualizar solo si se proporciona un archivo nuevo
+      avatar_url: req.file ? req.file.path : req.body.avatar_url,
       birth_date: req.body.birth_date ? new Date(req.body.birth_date) : null, // Fecha de nacimiento enviada desde el cliente
     };
     const updatedPerfil = await updatePerfil(userId, perfilData);

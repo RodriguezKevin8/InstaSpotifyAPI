@@ -36,14 +36,12 @@ export default class UserController {
   static async createUser(req, res) {
     const obj = { value: null, msg: "", status: false };
     try {
-      // Validar que el correo no exista
       const userValidator = await usuario.getUsuarioByEmail(req.body.email);
       if (userValidator) {
         obj.msg = "Email already exists";
         return res.status(400).json(obj);
       }
 
-      // Validar que el nombre de usuario no exista
       const usernameValidator = await usuario.getUsuarioByUserName(
         req.body.username
       );
@@ -52,12 +50,9 @@ export default class UserController {
         return res.status(400).json(obj);
       }
 
-      // Crear el usuario
       const user = await usuario.createUsuario(req.body);
 
-      // Si el usuario es "Artista", crear una entrada en ganancias y anuncios predeterminados
       if (user.role === "Artista") {
-        // Crear entrada en la tabla de ganancias
         await prisma.ganancias.create({
           data: {
             usuario_id: user.id,
@@ -70,7 +65,6 @@ export default class UserController {
           },
         });
 
-        // Crear anuncios predeterminados para el usuario
         const anunciosConUsuarioId = anunciosPredeterminados.map((anuncio) => ({
           ...anuncio,
           usuario_id: user.id,
@@ -81,7 +75,6 @@ export default class UserController {
         });
       }
 
-      // Configurar el objeto de respuesta y enviarlo
       obj.value = user;
       obj.msg = "User created successfully";
       if (user.role === "Artista") {
@@ -97,21 +90,18 @@ export default class UserController {
   static async login(req, res) {
     const obj = { value: null, msg: "", status: false };
     try {
-      // Buscar usuario por email
       const user = await usuario.getUsuarioByEmail(req.body.email);
       if (!user) {
         obj.msg = "User not found";
         return res.status(404).json(obj);
       }
 
-      // Comparar contraseñas
       const valid = await bcrypt.compare(req.body.password, user.password);
       if (!valid) {
         obj.msg = "Invalid password";
         return res.status(400).json(obj);
       }
 
-      // Respuesta de éxito en el login
       obj.value = {
         id: user.id,
         username: user.username,
@@ -122,6 +112,48 @@ export default class UserController {
       obj.msg = "User logged in successfully";
       obj.status = true;
       return res.status(200).json(obj);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  static async findusername(req, res) {
+    const obj = { value: null, msg: "", status: false };
+    try {
+      const user = await usuario.searchuser(req.params.username);
+      if (!user) {
+        obj.msg = "User not found";
+        return res.status(404).json(obj);
+      }
+      obj.value = user;
+      obj.msg = "User found";
+      obj.status = true;
+      return res.status(200).json(obj);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  static async getUserid(req, res) {
+    try {
+      const user = await usuario.getUsuarioById(parseInt(req.params.id));
+      if (!user) {
+        return res.status(404).json({ msg: "User not found" });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  static async preloger(req, res) {
+    try {
+      const user = await usuario.getPreloadedUsers();
+      if (!user) {
+        return res.status(404).json({ msg: "User not found" });
+      }
+
+      return res.status(200).json(user);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

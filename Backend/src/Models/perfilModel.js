@@ -41,10 +41,16 @@ export const getPerfilByUserId = async (userId) => {
   });
 };
 
-// Actualizar un perfil
 export const updatePerfil = async (userId, perfilData) => {
+  const user = await prisma.usuario.findUnique({
+    where: { id: userId },
+    select: {
+      perfil: true,
+    },
+  });
+
   return await prisma.perfil.update({
-    where: { usuario_id: userId },
+    where: { id: user.perfil.id },
     data: perfilData,
   });
 };
