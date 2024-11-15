@@ -24,6 +24,10 @@ export const getAlbumsByArtist = async (req, res) => {
   try {
     const albums = await prisma.album.findMany({
       where: { artist_id: artistId },
+      include: {
+        cancion: true, // Incluye las canciones relacionadas con el álbum
+        usuario: { select: { nombre: true } }, // Incluye solo el nombre del usuario (artista)
+      },
     });
     res.status(200).json(albums);
   } catch (error) {

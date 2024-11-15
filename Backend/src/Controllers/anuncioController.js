@@ -20,11 +20,11 @@ export const createNewAnuncio = async (req, res) => {
 export const incrementarMontoPorInteraccion = async (req, res) => {
   try {
     const anuncioId = parseInt(req.params.anuncioId, 10); // Convertir anuncioId a entero
-    const monto = parseFloat(req.body.monto); // Asegura que sea un número decimal
-    if (isNaN(anuncioId) || isNaN(monto)) {
+    const monto = 0.5; // Fijo a $0.50 por interacción
+    if (isNaN(anuncioId)) {
       return res
         .status(400)
-        .json({ error: "ID de anuncio y monto deben ser valores válidos" });
+        .json({ error: "ID de anuncio debe ser un valor válido" });
     }
     const updatedAnuncio = await incrementarInteraccionEnAnuncio(
       anuncioId,
@@ -35,7 +35,6 @@ export const incrementarMontoPorInteraccion = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 // Función para obtener todos los anuncios
 export const getAllAnuncios = async (req, res) => {
   try {
@@ -49,7 +48,7 @@ export const getAllAnuncios = async (req, res) => {
 export const getRandomAnuncios = async (req, res) => {
   try {
     const anuncios =
-      await prisma.$queryRaw`SELECT * FROM "anuncio" ORDER BY RANDOM() LIMIT 5`;
+      await prisma.$queryRaw`SELECT * FROM "anuncio" ORDER BY RANDOM() LIMIT 3`;
     res.status(200).json(anuncios);
   } catch (error) {
     res.status(500).json({ error: error.message });
