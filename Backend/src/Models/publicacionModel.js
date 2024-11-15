@@ -20,8 +20,25 @@ export const deletePublicacion = async (id) => {
   });
 };
 
-export const getallpublicaciones = async () => {
-  return await prisma.publicacion.findMany();
+export const getallpublicaciones = async (userId) => {
+  return await prisma.publicacion.findMany({
+    include: {
+      comentario: true,
+      megusta: true,
+      usuario: {
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          perfil: {
+            select: {
+              avatar_url: true,
+            },
+          },
+        },
+      },
+    },
+  });
 };
 
 export const getPublicacionesByUsuarioId = async (usuarioId) => {

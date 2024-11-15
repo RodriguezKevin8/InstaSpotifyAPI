@@ -60,4 +60,42 @@ export default class usuario {
     }
     return user;
   }
+
+  /**
+   * @param {string} username
+   */
+  static async searchuser(username) {
+    return await prisma.usuario.findMany({
+      where: {
+        username: {
+          contains: username,
+          mode: "insensitive",
+        },
+      },
+      include: {
+        perfil: true,
+      },
+    });
+  }
+
+  static async getPreloadedUsers() {
+    return await prisma.usuario.findMany({
+      take: 3,
+      include: {
+        perfil: true,
+      },
+    });
+  }
+
+  static async getUsuarioById(iduser) {
+    const usuario = await prisma.usuario.findFirst({
+      where: {
+        id: Number(iduser),
+      },
+      include: {
+        perfil: true,
+      },
+    });
+    return usuario;
+  }
 }

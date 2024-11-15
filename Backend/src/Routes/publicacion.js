@@ -4,6 +4,7 @@ import {
   createNewPublicacion,
   deleteExistingPublicacion,
   getPublicacionesByUsuarioController,
+  getFollowedPublicaciones,
 } from "../Controllers/publicacionController.js";
 import upload from "../config/multer.js";
 
@@ -13,5 +14,6 @@ router.get("/", getPublicaciones);
 router.post("/", upload.single("content_url"), createNewPublicacion);
 router.delete("/:id", deleteExistingPublicacion);
 router.get("/usuario/:usuarioId", getPublicacionesByUsuarioController);
+router.get("/followed/:id", getFollowedPublicaciones);
 
 export default router;

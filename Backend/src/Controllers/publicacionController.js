@@ -60,3 +60,13 @@ export const deleteExistingPublicacion = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getFollowedPublicaciones = async (req, res) => {
+  try {
+    const { id } = parseInt(req.params.id);
+    const publicaciones = await getallpublicaciones(id);
+    res.status(200).json(publicaciones);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
