@@ -11,7 +11,7 @@ export const getGananciasByUserId = async (userId) => {
 
 // Actualizar ganancias por reproducción manualmente (por si se necesita una opción manual)
 export const incrementarGananciasPorReproduccion = async (userId) => {
-  return await prisma.ganancias.update({
+  return await prisma.ganancias.updateMany({
     where: { usuario_id: userId },
     data: {
       ganancias_por_cancion: {

@@ -12,12 +12,17 @@ export const getAllAlbums = async () => {
   });
 };
 
+// src/Models/albumModel.js
 export const getAlbumById = async (id) => {
   return await prisma.album.findUnique({
     where: { id: parseInt(id) },
     include: {
-      cancion: true,
-      usuario: true,
+      cancion: {
+        include: {
+          usuario: { select: { nombre: true } }, // Incluye el nombre del artista (usuario) de cada canción
+        },
+      },
+      usuario: { select: { nombre: true } }, // Incluye el nombre del artista principal del álbum
     },
   });
 };

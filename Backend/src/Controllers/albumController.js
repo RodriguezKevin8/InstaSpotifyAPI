@@ -33,6 +33,7 @@ export const getAlbumsByArtist = async (req, res) => {
   }
 };
 
+// src/Controllers/albumController.js
 export const getAlbum = async (req, res) => {
   try {
     const album = await getAlbumById(req.params.id);

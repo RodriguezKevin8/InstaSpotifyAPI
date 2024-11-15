@@ -63,7 +63,7 @@ model comentario {
 
 model ganancias {
   id                     Int       @id @default(autoincrement())
-  usuario_id             Int?
+  usuario_id             Int       @unique
   total_ganancias        Decimal?  @default(0.0) @db.Decimal(10, 2)
   monto_por_reproduccion Decimal?  @default(0.0) @db.Decimal(5, 2)
   total_reproducciones   Int?      @default(0)
